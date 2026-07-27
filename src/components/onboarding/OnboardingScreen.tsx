@@ -11,10 +11,10 @@ import {
   Space,
   Typography,
 } from "antd";
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import dayjs, { type Dayjs } from "dayjs";
 import type { RotaPeriod, RotaStatus, UserProfile } from "../../core/types";
-import { useLanguage } from '../../context/LanguageContext';
+import { useLanguage } from "../../context/LanguageContext";
 
 const { Title, Paragraph } = Typography;
 
@@ -69,12 +69,12 @@ export function ProfileForm({
         startStatus: initialValues?.startStatus ?? "duty",
         useCustomPeriods: Boolean(initialValues?.customPeriods?.length),
         customPeriods: initialValues?.customPeriods ?? [
-          { status: initialValues?.startStatus ?? 'duty', duration: 21 },
+          { status: initialValues?.startStatus ?? "duty", duration: 21 },
         ],
       }}
     >
       <Form.Item
-        label={isUrdu ? 'آپ کا نام' : 'Your name'}
+        label={isUrdu ? "آپ کا نام" : "Your name"}
         name="name"
         rules={[
           { required: true, message: "Please enter your name" },
@@ -82,24 +82,44 @@ export function ProfileForm({
           { min: 2, message: "Name must be at least 2 characters" },
         ]}
       >
-        <Input placeholder={isUrdu ? 'اپنا پورا نام درج کریں' : 'Enter your full name'} maxLength={80} />
+        <Input
+          placeholder={
+            isUrdu ? "اپنا پورا نام درج کریں" : "Enter your full name"
+          }
+          maxLength={80}
+        />
       </Form.Item>
 
       <Form.Item name="useCustomPeriods" valuePropName="checked">
         <Checkbox>
-          {isUrdu ? 'اس تاریخ سے کسٹم روسٹر پیریڈز استعمال کریں' : 'Use custom roster periods from this date'}
+          {isUrdu
+            ? "اس تاریخ سے کسٹم روسٹر پیریڈز استعمال کریں"
+            : "Use custom roster periods from this date"}
         </Checkbox>
       </Form.Item>
 
-      <Form.Item noStyle shouldUpdate={(prev, curr) => prev.useCustomPeriods !== curr.useCustomPeriods}>
+      <Form.Item
+        noStyle
+        shouldUpdate={(prev, curr) =>
+          prev.useCustomPeriods !== curr.useCustomPeriods
+        }
+      >
         {({ getFieldValue }) =>
-          getFieldValue('useCustomPeriods') ? (
+          getFieldValue("useCustomPeriods") ? (
             <Card size="small" style={{ marginBottom: 24 }}>
-              <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+              <Space
+                direction="vertical"
+                size="middle"
+                style={{ width: "100%" }}
+              >
                 <Alert
                   type="info"
                   showIcon
-                  message={isUrdu ? 'کسٹم پیریڈز اوپر والی تاریخ سے شروع ہوں گے' : 'Custom periods start on the date above'}
+                  message={
+                    isUrdu
+                      ? "کسٹم پیریڈز اوپر والی تاریخ سے شروع ہوں گے"
+                      : "Custom periods start on the date above"
+                  }
                   description="Choose whether each period is duty or off, and its length. When the listed periods end, the normal 21-day duty / 21-day off rotation resumes."
                 />
                 <Form.List
@@ -107,31 +127,51 @@ export function ProfileForm({
                   rules={[
                     {
                       validator: async (_, periods) => {
-                        if (!periods?.length) throw new Error('Add at least one custom period');
+                        if (!periods?.length)
+                          throw new Error("Add at least one custom period");
                       },
                     },
                   ]}
                 >
                   {(fields, { add, remove }, { errors }) => (
-                    <Space direction="vertical" size="small" style={{ width: '100%' }}>
+                    <Space
+                      direction="vertical"
+                      size="small"
+                      style={{ width: "100%" }}
+                    >
                       {fields.map((field, index) => (
                         <Space key={field.key} align="start" wrap>
                           <Form.Item
-                            label={index === 0 ? 'First period status' : `Period ${index + 1} status`}
-                            name={[field.name, 'status']}
-                            rules={[{ required: true, message: 'Select a status' }]}
+                            label={
+                              index === 0
+                                ? "First period status"
+                                : `Period ${index + 1} status`
+                            }
+                            name={[field.name, "status"]}
+                            rules={[
+                              { required: true, message: "Select a status" },
+                            ]}
                           >
                             <Radio.Group>
-                              <Radio.Button value="duty">{isUrdu ? 'ڈیوٹی' : 'Duty'}</Radio.Button>
-                              <Radio.Button value="off">{isUrdu ? 'چھٹی' : 'Off'}</Radio.Button>
+                              <Radio.Button value="duty">
+                                {isUrdu ? "ڈیوٹی" : "Duty"}
+                              </Radio.Button>
+                              <Radio.Button value="off">
+                                {isUrdu ? "چھٹی" : "Off"}
+                              </Radio.Button>
                             </Radio.Group>
                           </Form.Item>
                           <Form.Item
-                            label={isUrdu ? 'دن' : 'Days'}
-                            name={[field.name, 'duration']}
-                            rules={[{ required: true, message: 'Enter days' }]}
+                            label={isUrdu ? "دن" : "Days"}
+                            name={[field.name, "duration"]}
+                            rules={[{ required: true, message: "Enter days" }]}
                           >
-                            <InputNumber min={1} max={365} precision={0} addonAfter="days" />
+                            <InputNumber
+                              min={1}
+                              max={365}
+                              precision={0}
+                              addonAfter="days"
+                            />
                           </Form.Item>
                           {fields.length > 1 && (
                             <Button
@@ -148,10 +188,10 @@ export function ProfileForm({
                       <Button
                         type="dashed"
                         icon={<PlusOutlined />}
-                        onClick={() => add({ status: 'off', duration: 21 })}
-                        style={{ width: 'fit-content' }}
+                        onClick={() => add({ status: "off", duration: 21 })}
+                        style={{ width: "fit-content" }}
                       >
-                        {isUrdu ? 'پیریڈ شامل کریں' : 'Add period'}
+                        {isUrdu ? "پیریڈ شامل کریں" : "Add period"}
                       </Button>
                       <Form.ErrorList errors={errors} />
                     </Space>
@@ -164,7 +204,9 @@ export function ProfileForm({
       </Form.Item>
 
       <Form.Item
-        label={isUrdu ? 'آپ کی موجودہ حیثیت کیا ہے؟' : 'What is your current status?'}
+        label={
+          isUrdu ? "آپ کی موجودہ حیثیت کیا ہے؟" : "What is your current status?"
+        }
         name="startStatus"
         rules={[
           { required: true, message: "Please select your current status" },
@@ -173,10 +215,26 @@ export function ProfileForm({
         <Radio.Group>
           <Space direction="vertical">
             <Radio value="duty">
-              {isUrdu ? <>میں اس وقت <strong>ڈیوٹی پر</strong> ہوں — اس ڈیوٹی پیریڈ کی شروعات کی تاریخ درج کریں</> : <>I am currently on <strong>Duty</strong> — enter when this duty period started</>}
+              {isUrdu ? (
+                <>
+                  میں اس وقت <strong>ڈیوٹی پر</strong> ہوں
+                </>
+              ) : (
+                <>
+                  I am currently on <strong>Duty</strong>
+                </>
+              )}
             </Radio>
             <Radio value="off">
-              {isUrdu ? <>میں اس وقت <strong>چھٹی پر</strong> ہوں — اس چھٹی کے پیریڈ کی شروعات کی تاریخ درج کریں</> : <>I am currently on <strong>Days Off</strong> — enter when this off period started</>}
+              {isUrdu ? (
+                <>
+                  میں اس وقت <strong>چھٹی پر</strong> ہوں
+                </>
+              ) : (
+                <>
+                  I am currently on <strong>Days Off</strong>
+                </>
+              )}
             </Radio>
           </Space>
         </Radio.Group>
@@ -221,7 +279,11 @@ export function ProfileForm({
           <Button type="primary" htmlType="submit">
             {submitLabel}
           </Button>
-            {onCancel && <Button onClick={onCancel}>{isUrdu ? 'منسوخ کریں' : 'Cancel'}</Button>}
+          {onCancel && (
+            <Button onClick={onCancel}>
+              {isUrdu ? "منسوخ کریں" : "Cancel"}
+            </Button>
+          )}
         </Space>
       </Form.Item>
     </Form>
@@ -246,10 +308,12 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
             />
             <Space direction="vertical" size="large" style={{ width: "100%" }}>
               <Title level={2} style={{ margin: 0 }}>
-                {isUrdu ? 'ڈیوٹی روسٹر ٹریکر' : 'Duty Roster Tracker'}
+                {isUrdu ? "ڈیوٹی روسٹر ٹریکر" : "Duty Roster Tracker"}
               </Title>
               <Paragraph type="secondary">
-                {isUrdu ? 'اپنا شیڈول دیکھنے کے لیے جوائننگ تاریخ اور موجودہ حیثیت درج کریں۔ ضرورت کے مطابق کسٹم ڈیوٹی اور چھٹی کے پیریڈز شامل کیے جا سکتے ہیں۔' : 'Enter your joining date and current status to track your schedule. Custom duty and off periods can be configured whenever needed.'}
+                {isUrdu
+                  ? "اپنا شیڈول دیکھنے کے لیے جوائننگ تاریخ اور موجودہ حیثیت درج کریں۔ ضرورت کے مطابق کسٹم ڈیوٹی اور چھٹی کے پیریڈز شامل کیے جا سکتے ہیں۔"
+                  : "Enter your joining date and current status to track your schedule. Custom duty and off periods can be configured whenever needed."}
               </Paragraph>
             </Space>
             <Paragraph type="secondary" style={{ marginTop: "-12px" }}>
