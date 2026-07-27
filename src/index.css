@@ -19,8 +19,8 @@ body,
   --app-border: #e8e8e8;
   --app-text: rgba(0, 0, 0, 0.88);
   --app-text-secondary: rgba(0, 0, 0, 0.45);
-  --app-brand-color: #0a9e82;
-  --app-brand-muted: rgba(19, 217, 180, 0.12);
+  --app-brand-color: #008f70;
+  --app-brand-muted: rgba(0, 168, 132, 0.18);
 }
 
 :root[data-theme='dark'] {
@@ -31,8 +31,8 @@ body,
   --app-border: #303030;
   --app-text: rgba(255, 255, 255, 0.85);
   --app-text-secondary: rgba(255, 255, 255, 0.45);
-  --app-brand-color: #13d9b4;
-  --app-brand-muted: rgba(19, 217, 180, 0.15);
+  --app-brand-color: #18d9ae;
+  --app-brand-muted: rgba(24, 217, 174, 0.2);
 }
 
 body {

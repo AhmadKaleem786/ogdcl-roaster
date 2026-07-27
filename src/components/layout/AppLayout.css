@@ -89,6 +89,16 @@
   border-inline-end: none !important;
 }
 
+.sidebar-menu .ant-menu-item-selected {
+  background: var(--app-brand-muted) !important;
+  color: var(--app-brand-color) !important;
+  font-weight: 700;
+}
+
+.sidebar-menu .ant-menu-item-selected .anticon {
+  color: var(--app-brand-color) !important;
+}
+
 .app-main {
   min-width: 0;
   min-height: 100vh;

@@ -3,9 +3,9 @@ import { theme, type ThemeConfig } from 'antd';
 export type ThemeMode = 'light' | 'dark';
 
 const sharedTokens: ThemeConfig['token'] = {
-  colorPrimary: '#13d9b4',
-  colorInfo: '#0072bc',
-  colorSuccess: '#13d9b4',
+  colorPrimary: '#00a884',
+  colorInfo: '#1677ff',
+  colorSuccess: '#00a884',
   borderRadius: 8,
   fontFamily:
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
@@ -51,8 +51,8 @@ export function getOgdclTheme(mode: ThemeMode): ThemeConfig {
 }
 
 export const rotaColors = {
-  duty: '#13d9b4',
-  off: '#0072bc',
-  dutyBg: 'rgba(19, 217, 180, 0.18)',
-  offBg: 'rgba(0, 114, 188, 0.22)',
+  duty: '#00a884',
+  off: '#1677ff',
+  dutyBg: 'rgba(0, 168, 132, 0.24)',
+  offBg: 'rgba(22, 119, 255, 0.24)',
 };

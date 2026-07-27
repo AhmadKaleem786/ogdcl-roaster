@@ -10,9 +10,11 @@
 }
 
 .future-result--duty .ant-result-title {
-  color: #13d9b4 !important;
+  color: #00a884 !important;
+  font-weight: 700;
 }
 
 .future-result--off .ant-result-title {
-  color: #4da3d9 !important;
+  color: #1677ff !important;
+  font-weight: 700;
 }
