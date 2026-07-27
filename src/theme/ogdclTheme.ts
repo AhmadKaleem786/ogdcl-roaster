@@ -8,7 +8,7 @@ const sharedTokens: ThemeConfig['token'] = {
   colorSuccess: '#00a884',
   borderRadius: 8,
   fontFamily:
-    "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+    "Urbanist, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
 };
 
 export function getOgdclTheme(mode: ThemeMode): ThemeConfig {
