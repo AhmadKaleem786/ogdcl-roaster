@@ -4,6 +4,7 @@ import {
   Card,
   Checkbox,
   DatePicker,
+  Flex,
   Form,
   Input,
   InputNumber,
@@ -90,13 +91,67 @@ export function ProfileForm({
         />
       </Form.Item>
 
-      <Form.Item name="useCustomPeriods" valuePropName="checked">
-        <Checkbox>
-          {isUrdu
-            ? "اس تاریخ سے کسٹم روسٹر پیریڈز استعمال کریں"
-            : "Use custom roster periods from this date"}
-        </Checkbox>
+      <Form.Item
+        label={
+          isUrdu ? "آپ کی موجودہ حیثیت کیا ہے؟" : "What is your current status?"
+        }
+        name="startStatus"
+        rules={[
+          { required: true, message: "Please select your current status" },
+        ]}
+      >
+        <Radio.Group>
+          <Space direction="vertical">
+            <Radio value="duty">
+              {isUrdu ? (
+                <>
+                  میں اس وقت <strong>ڈیوٹی پر</strong> ہوں
+                </>
+              ) : (
+                <>
+                  I am currently on <strong>Duty</strong>
+                </>
+              )}
+            </Radio>
+            <Radio value="off">
+              {isUrdu ? (
+                <>
+                  میں اس وقت <strong>چھٹی پر</strong> ہوں
+                </>
+              ) : (
+                <>
+                  I am currently on <strong>Days Off</strong>
+                </>
+              )}
+            </Radio>
+          </Space>
+        </Radio.Group>
       </Form.Item>
+
+      <Alert
+        style={{ marginBottom: "20px" }}
+        type="warning"
+        title={
+          <>
+            <Form.Item name="useCustomPeriods" valuePropName="checked">
+              <Checkbox>
+                {isUrdu
+                  ? "اس تاریخ سے کسٹم روسٹر پیریڈز استعمال کریں"
+                  : "My rota temporarily differs from the usual schedule"}
+              </Checkbox>
+            </Form.Item>
+
+            <Typography.Text
+              type="secondary"
+              style={{ display: "block", marginTop: -25 }}
+            >
+              {isUrdu
+                ? "یہ اختیار صرف اس وقت استعمال کریں جب آپ کے ڈیوٹی یا چھٹی کے دن معمول کے روسٹر سے مختلف ہوں۔"
+                : "Use this only when your duty or off periods temporarily differ from the normal 21-day duty / 21-day off rota."}
+            </Typography.Text>
+          </>
+        }
+      />
 
       <Form.Item
         noStyle
@@ -106,7 +161,7 @@ export function ProfileForm({
       >
         {({ getFieldValue }) =>
           getFieldValue("useCustomPeriods") ? (
-            <Card size="small" style={{ marginBottom: 24 }}>
+            <Card size="small" style={{ marginBottom: 20 }}>
               <Space
                 direction="vertical"
                 size="middle"
@@ -114,13 +169,17 @@ export function ProfileForm({
               >
                 <Alert
                   type="info"
-                  showIcon
+                  style={{ padding: "10px" }}
                   message={
                     isUrdu
                       ? "کسٹم پیریڈز اوپر والی تاریخ سے شروع ہوں گے"
-                      : "Custom periods start on the date above"
+                      : "How this temporary rota works"
                   }
-                  description="Choose whether each period is duty or off, and its length. When the listed periods end, the normal 21-day duty / 21-day off rotation resumes."
+                  description={
+                    isUrdu
+                      ? "ہر پیریڈ کو ترتیب سے شامل کریں: ڈیوٹی یا چھٹی اور اس کے دن۔ آخری پیریڈ کے بعد معمول کا روسٹر دوبارہ شروع ہو جائے گا۔"
+                      : "Add each period in order: choose Duty or Off, then the number of days. After the final period, your normal 21-day duty / 21-day off rota resumes. Example: 15 days Off → 30 days Duty → 12 days Off."
+                  }
                 />
                 <Form.List
                   name="customPeriods"
@@ -134,11 +193,7 @@ export function ProfileForm({
                   ]}
                 >
                   {(fields, { add, remove }, { errors }) => (
-                    <Space
-                      direction="vertical"
-                      size="small"
-                      style={{ width: "100%" }}
-                    >
+                    <Flex vertical style={{ width: "100%" }}>
                       {fields.map((field, index) => (
                         <Space key={field.key} align="start" wrap>
                           <Form.Item
@@ -194,50 +249,13 @@ export function ProfileForm({
                         {isUrdu ? "پیریڈ شامل کریں" : "Add period"}
                       </Button>
                       <Form.ErrorList errors={errors} />
-                    </Space>
+                    </Flex>
                   )}
                 </Form.List>
               </Space>
             </Card>
           ) : null
         }
-      </Form.Item>
-
-      <Form.Item
-        label={
-          isUrdu ? "آپ کی موجودہ حیثیت کیا ہے؟" : "What is your current status?"
-        }
-        name="startStatus"
-        rules={[
-          { required: true, message: "Please select your current status" },
-        ]}
-      >
-        <Radio.Group>
-          <Space direction="vertical">
-            <Radio value="duty">
-              {isUrdu ? (
-                <>
-                  میں اس وقت <strong>ڈیوٹی پر</strong> ہوں
-                </>
-              ) : (
-                <>
-                  I am currently on <strong>Duty</strong>
-                </>
-              )}
-            </Radio>
-            <Radio value="off">
-              {isUrdu ? (
-                <>
-                  میں اس وقت <strong>چھٹی پر</strong> ہوں
-                </>
-              ) : (
-                <>
-                  I am currently on <strong>Days Off</strong>
-                </>
-              )}
-            </Radio>
-          </Space>
-        </Radio.Group>
       </Form.Item>
 
       <Form.Item
