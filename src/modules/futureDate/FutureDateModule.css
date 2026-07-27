@@ -1,0 +1,18 @@
+.future-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+.future-result .ant-result-icon {
+  display: none;
+}
+
+.future-result--duty .ant-result-title {
+  color: #13d9b4 !important;
+}
+
+.future-result--off .ant-result-title {
+  color: #4da3d9 !important;
+}

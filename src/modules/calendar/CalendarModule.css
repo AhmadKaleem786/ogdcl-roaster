@@ -1,0 +1,108 @@
+.calendar-cell {
+  margin-top: 4px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 10px;
+  text-align: center;
+}
+
+.calendar-cell--duty {
+  background: rgba(19, 217, 180, 0.18);
+  color: #13d9b4;
+}
+
+.calendar-cell--off {
+  background: rgba(0, 114, 188, 0.22);
+  color: #4da3d9;
+}
+
+.calendar-hint {
+  display: block;
+  margin-top: 12px;
+}
+
+.calendar-card .ant-picker-calendar {
+  background: transparent;
+}
+
+.calendar-full-cell {
+  min-height: 72px;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.calendar-full-cell--duty {
+  background: rgba(19, 217, 180, 0.12);
+  border-color: rgba(19, 217, 180, 0.25);
+}
+
+.calendar-full-cell--off {
+  background: rgba(0, 114, 188, 0.15);
+  border-color: rgba(0, 114, 188, 0.3);
+}
+
+.calendar-full-cell--today {
+  box-shadow: inset 0 0 0 2px #13d9b4;
+}
+
+.calendar-full-cell__date {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.calendar-full-cell__status {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.9;
+}
+
+.calendar-full-cell__day {
+  font-size: 10px;
+  opacity: 0.75;
+}
+
+.legend-tag {
+  padding: 4px 12px;
+  font-size: 13px;
+}
+
+.module-card {
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+}
+
+@media (max-width: 768px) {
+  .calendar-full-cell {
+    min-height: 48px;
+    padding: 3px;
+  }
+
+  .calendar-full-cell__date {
+    font-size: 12px;
+  }
+
+  .calendar-full-cell__status,
+  .calendar-full-cell__day {
+    display: none;
+  }
+
+  .calendar-card .ant-picker-calendar-date-content {
+    height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-full-cell {
+    min-height: 36px;
+    border-radius: 4px;
+  }
+
+  .calendar-full-cell__date {
+    font-size: 11px;
+  }
+}
