@@ -26,6 +26,7 @@
 }
 
 .calendar-full-cell {
+  margin-inline: 5px;
   min-height: 72px;
   padding: 6px;
   border-radius: 8px;
