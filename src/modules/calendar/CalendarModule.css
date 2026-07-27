@@ -77,6 +77,16 @@
   border: 1px solid var(--app-border);
 }
 
+.calendar-card
+  .ant-picker-calendar
+  .ant-picker-calendar-header
+  .ant-picker-calendar-mode-switch {
+  width: 100%;
+  margin-top: var(--ant-margin-xs);
+  margin-inline-start: 0;
+  display: none;
+}
+
 @media (max-width: 768px) {
   .calendar-full-cell {
     min-height: 48px;
