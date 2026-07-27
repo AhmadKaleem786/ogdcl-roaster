@@ -1,11 +1,17 @@
 .app-layout {
   min-height: 100vh;
+  align-items: flex-start;
 }
 
 .app-sider {
   position: relative;
   border-right: 1px solid var(--app-border);
   overflow: hidden;
+  height: 100vh;
+  position: sticky !important;
+  top: 0;
+  align-self: flex-start;
+  z-index: 20;
 }
 
 .app-sider .ant-layout-sider-children {
@@ -85,6 +91,7 @@
 
 .app-main {
   min-width: 0;
+  min-height: 100vh;
 }
 
 .app-header {
@@ -97,6 +104,10 @@
   height: auto;
   min-height: 64px;
   line-height: 1.4;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 1px 0 var(--app-border);
 }
 
 .app-header__left {
@@ -247,6 +258,15 @@
 }
 
 @media (max-width: 991px) {
+  .app-layout {
+    display: block;
+  }
+
+  .app-header {
+    min-height: 60px;
+    padding: 10px 12px;
+  }
+
   .app-header__subtitle {
     display: none;
   }
@@ -254,14 +274,32 @@
   .app-content {
     padding: 16px;
   }
+
+  .mobile-drawer .ant-drawer-body {
+    padding: 12px 0;
+  }
 }
 
 @media (max-width: 576px) {
+  .app-header {
+    gap: 8px;
+  }
+
   .app-header__title {
     font-size: 16px;
   }
 
+  .mobile-menu-trigger,
+  .theme-toggle {
+    width: 38px;
+    height: 38px;
+  }
+
   .app-content {
     padding: 12px;
+  }
+
+  .app-content .module-card {
+    border-radius: 10px;
   }
 }
