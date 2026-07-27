@@ -43,3 +43,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+html[lang='ur'] body {
+  font-family: 'Noto Naskh Arabic', 'Segoe UI', Tahoma, sans-serif;
+}

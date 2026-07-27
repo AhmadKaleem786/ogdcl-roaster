@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import { formatStatusLabel, getTodayStatus } from '../../core/rota/calculator';
 import type { UserProfile } from '../../core/types';
 import { rotaColors } from '../../theme/ogdclTheme';
+import { useLanguage } from '../../context/LanguageContext';
 
 const { Text, Title } = Typography;
 
@@ -21,6 +22,7 @@ function getInitials(name: string): string {
 }
 
 export function ProfileSummary({ profile, collapsed = false, onOpenSettings }: ProfileSummaryProps) {
+  const { isUrdu } = useLanguage();
   const todayInfo = getTodayStatus(profile);
   const isDuty = todayInfo.status === 'duty';
 
@@ -47,23 +49,23 @@ export function ProfileSummary({ profile, collapsed = false, onOpenSettings }: P
         <Space align="center" style={{ width: '100%', justifyContent: 'space-between' }}>
           <div style={{ minWidth: 0 }}>
             <Title level={5} style={{ margin: 0 }} ellipsis>{profile.name}</Title>
-            <Text type="secondary" style={{ fontSize: 12 }}>Your Rota</Text>
+            <Text type="secondary" style={{ fontSize: 12 }}>{isUrdu ? 'آپ کا روسٹر' : 'Your Rota'}</Text>
           </div>
           <Button type="text" icon={<EditOutlined />} onClick={onOpenSettings} aria-label="Update roster" />
         </Space>
 
         <Tag color={isDuty ? rotaColors.duty : rotaColors.off}>
-          Today: {formatStatusLabel(todayInfo)}
+          {isUrdu ? 'آج:' : 'Today:'} {isUrdu ? `دن ${todayInfo.dayNumber} از ${todayInfo.totalDaysInPeriod}` : formatStatusLabel(todayInfo)}
         </Tag>
         <Text type="secondary" style={{ fontSize: 12 }}>
-          {profile.startStatus === 'duty' ? 'Duty' : 'Days off'} started {dayjs(profile.startDate).format('DD MMM YYYY')}
+          {isUrdu ? 'شروع ہونے کی تاریخ:' : `${profile.startStatus === 'duty' ? 'Duty' : 'Days off'} started`} {dayjs(profile.startDate).format('DD MMM YYYY')}
         </Text>
         {profile.customPeriods?.length ? (
           <Text type="secondary" style={{ fontSize: 12 }}>
             {profile.customPeriods.length} custom period{profile.customPeriods.length === 1 ? '' : 's'} configured
           </Text>
         ) : null}
-        <Button type="primary" size="small" onClick={onOpenSettings}>Update roster</Button>
+        <Button type="primary" size="small" onClick={onOpenSettings}>{isUrdu ? 'روسٹر اپ ڈیٹ کریں' : 'Update roster'}</Button>
       </Space>
     </Card>
   );

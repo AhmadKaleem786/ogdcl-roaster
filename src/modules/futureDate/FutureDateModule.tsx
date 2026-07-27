@@ -17,6 +17,7 @@ import {
 } from '../../core/rota/calculator';
 import type { ModuleProps, RotaDayInfo } from '../../core/types';
 import { rotaColors } from '../../theme/ogdclTheme';
+import { useLanguage } from '../../context/LanguageContext';
 import './FutureDateModule.css';
 
 const { Title, Text, Paragraph } = Typography;
@@ -26,6 +27,7 @@ interface LookupFormValues {
 }
 
 export function FutureDateModule({ profile }: ModuleProps) {
+  const { isUrdu } = useLanguage();
   const [result, setResult] = useState<RotaDayInfo | null>(null);
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [form] = Form.useForm<LookupFormValues>();
@@ -42,11 +44,10 @@ export function FutureDateModule({ profile }: ModuleProps) {
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <Card bordered={false} className="module-card">
         <Title level={4} style={{ marginTop: 0 }}>
-          Check a Future Date
+          {isUrdu ? 'آئندہ تاریخ دیکھیں' : 'Check a Future Date'}
         </Title>
         <Paragraph type="secondary">
-          Pick any date to see whether you will be on duty or on days off, and how
-          many days into that period you will be.
+          {isUrdu ? 'کسی بھی تاریخ کو منتخب کریں تاکہ معلوم ہو سکے کہ آپ ڈیوٹی پر ہوں گے یا چھٹی پر، اور اس پیریڈ کا کون سا دن ہوگا۔' : 'Pick any date to see whether you will be on duty or on days off, and how many days into that period you will be.'}
         </Paragraph>
 
         <Form
@@ -56,7 +57,7 @@ export function FutureDateModule({ profile }: ModuleProps) {
           initialValues={{ targetDate: dayjs().add(1, 'month') }}
         >
           <Form.Item
-            label="Select date"
+            label={isUrdu ? 'تاریخ منتخب کریں' : 'Select date'}
             name="targetDate"
             rules={[{ required: true, message: 'Please select a date' }]}
           >
@@ -69,7 +70,7 @@ export function FutureDateModule({ profile }: ModuleProps) {
 
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Look Up Date
+              {isUrdu ? 'تاریخ دیکھیں' : 'Look Up Date'}
             </Button>
           </Form.Item>
         </Form>
@@ -82,7 +83,7 @@ export function FutureDateModule({ profile }: ModuleProps) {
             status="info"
             title={
               <span style={{ color: isDuty ? rotaColors.duty : rotaColors.off }}>
-                {isDuty ? 'On Duty' : 'On Days Off'}
+                {isUrdu ? (isDuty ? 'ڈیوٹی پر' : 'چھٹی پر') : (isDuty ? 'On Duty' : 'On Days Off')}
               </span>
             }
             subTitle={selectedDate.format('dddd, DD MMMM YYYY')}
@@ -90,7 +91,7 @@ export function FutureDateModule({ profile }: ModuleProps) {
               <Space direction="vertical" size="middle" style={{ width: '100%' }}>
                 <div className="future-stats">
                   <Statistic
-                    title="Day in current period"
+                    title={isUrdu ? 'موجودہ پیریڈ کا دن' : 'Day in current period'}
                     value={result.dayNumber}
                     suffix={`/ ${result.totalDaysInPeriod}`}
                     valueStyle={{
@@ -98,7 +99,7 @@ export function FutureDateModule({ profile }: ModuleProps) {
                     }}
                   />
                   <Statistic
-                    title="Days until switch"
+                    title={isUrdu ? 'تبدیلی تک دن' : 'Days until switch'}
                     value={result.daysUntilSwitch}
                     suffix="days"
                   />

@@ -4,6 +4,7 @@ import type { UserProfile } from '../../core/types';
 import { appModules } from '../../modules/registry';
 import { useTheme } from '../../context/ThemeContext';
 import { ProfileSummary } from '../profile/ProfileSummary';
+import { useLanguage } from '../../context/LanguageContext';
 
 const { Text } = Typography;
 
@@ -25,11 +26,12 @@ export function SidebarContent({
   onNavigate,
 }: SidebarContentProps) {
   const { mode } = useTheme();
+  const { isUrdu } = useLanguage();
 
   const menuItems: MenuProps['items'] = appModules.map((module) => ({
     key: module.id,
     icon: module.icon,
-    label: module.title,
+    label: isUrdu ? ({ calendar: 'ڈیوٹی کیلنڈر', 'future-date': 'آئندہ تاریخ دیکھیں', 'roster-settings': 'روسٹر سیٹنگز' }[module.id] ?? module.title) : module.title,
   }));
 
   const handleMenuClick: MenuProps['onClick'] = ({ key }) => {
@@ -45,7 +47,7 @@ export function SidebarContent({
           alt="OGDCL"
           className={`app-brand__logo ${collapsed ? 'app-brand__logo--collapsed' : ''}`}
         />
-        {!collapsed && <Text className="app-brand__title">Duty Roster</Text>}
+        {!collapsed && <Text className="app-brand__title">{isUrdu ? 'ڈیوٹی روسٹر' : 'Duty Roster'}</Text>}
       </div>
 
       <ProfileSummary

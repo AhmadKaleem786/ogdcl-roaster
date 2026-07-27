@@ -176,6 +176,12 @@
   height: 40px;
 }
 
+.language-toggle {
+  min-width: 48px;
+  height: 40px;
+  font-weight: 700;
+}
+
 .app-content {
   padding: 24px;
   min-height: calc(100vh - 64px);
@@ -302,6 +308,11 @@
   .mobile-menu-trigger,
   .theme-toggle {
     width: 38px;
+    height: 38px;
+  }
+
+  .language-toggle {
+    min-width: 44px;
     height: 38px;
   }
 

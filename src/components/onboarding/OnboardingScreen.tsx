@@ -14,6 +14,7 @@ import {
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import dayjs, { type Dayjs } from "dayjs";
 import type { RotaPeriod, RotaStatus, UserProfile } from "../../core/types";
+import { useLanguage } from '../../context/LanguageContext';
 
 const { Title, Paragraph } = Typography;
 
@@ -38,6 +39,7 @@ export function ProfileForm({
   onSubmit,
   onCancel,
 }: ProfileFormProps) {
+  const { isUrdu } = useLanguage();
   const [form] = Form.useForm<ProfileFormValues>();
 
   const handleFinish = (values: ProfileFormValues) => {
@@ -72,7 +74,7 @@ export function ProfileForm({
       }}
     >
       <Form.Item
-        label="Your name"
+        label={isUrdu ? 'آپ کا نام' : 'Your name'}
         name="name"
         rules={[
           { required: true, message: "Please enter your name" },
@@ -80,12 +82,12 @@ export function ProfileForm({
           { min: 2, message: "Name must be at least 2 characters" },
         ]}
       >
-        <Input placeholder="Enter your full name" maxLength={80} />
+        <Input placeholder={isUrdu ? 'اپنا پورا نام درج کریں' : 'Enter your full name'} maxLength={80} />
       </Form.Item>
 
       <Form.Item name="useCustomPeriods" valuePropName="checked">
         <Checkbox>
-          Use custom roster periods from this date
+          {isUrdu ? 'اس تاریخ سے کسٹم روسٹر پیریڈز استعمال کریں' : 'Use custom roster periods from this date'}
         </Checkbox>
       </Form.Item>
 
@@ -97,7 +99,7 @@ export function ProfileForm({
                 <Alert
                   type="info"
                   showIcon
-                  message="Custom periods start on the date above"
+                  message={isUrdu ? 'کسٹم پیریڈز اوپر والی تاریخ سے شروع ہوں گے' : 'Custom periods start on the date above'}
                   description="Choose whether each period is duty or off, and its length. When the listed periods end, the normal 21-day duty / 21-day off rotation resumes."
                 />
                 <Form.List
@@ -120,12 +122,12 @@ export function ProfileForm({
                             rules={[{ required: true, message: 'Select a status' }]}
                           >
                             <Radio.Group>
-                              <Radio.Button value="duty">Duty</Radio.Button>
-                              <Radio.Button value="off">Off</Radio.Button>
+                              <Radio.Button value="duty">{isUrdu ? 'ڈیوٹی' : 'Duty'}</Radio.Button>
+                              <Radio.Button value="off">{isUrdu ? 'چھٹی' : 'Off'}</Radio.Button>
                             </Radio.Group>
                           </Form.Item>
                           <Form.Item
-                            label="Days"
+                            label={isUrdu ? 'دن' : 'Days'}
                             name={[field.name, 'duration']}
                             rules={[{ required: true, message: 'Enter days' }]}
                           >
@@ -149,7 +151,7 @@ export function ProfileForm({
                         onClick={() => add({ status: 'off', duration: 21 })}
                         style={{ width: 'fit-content' }}
                       >
-                        Add period
+                        {isUrdu ? 'پیریڈ شامل کریں' : 'Add period'}
                       </Button>
                       <Form.ErrorList errors={errors} />
                     </Space>
@@ -162,7 +164,7 @@ export function ProfileForm({
       </Form.Item>
 
       <Form.Item
-        label="What is your current status?"
+        label={isUrdu ? 'آپ کی موجودہ حیثیت کیا ہے؟' : 'What is your current status?'}
         name="startStatus"
         rules={[
           { required: true, message: "Please select your current status" },
@@ -171,12 +173,10 @@ export function ProfileForm({
         <Radio.Group>
           <Space direction="vertical">
             <Radio value="duty">
-              I am currently on <strong>Duty</strong> — enter when this duty
-              period started
+              {isUrdu ? <>میں اس وقت <strong>ڈیوٹی پر</strong> ہوں — اس ڈیوٹی پیریڈ کی شروعات کی تاریخ درج کریں</> : <>I am currently on <strong>Duty</strong> — enter when this duty period started</>}
             </Radio>
             <Radio value="off">
-              I am currently on <strong>Days Off</strong> — enter when this off
-              period started
+              {isUrdu ? <>میں اس وقت <strong>چھٹی پر</strong> ہوں — اس چھٹی کے پیریڈ کی شروعات کی تاریخ درج کریں</> : <>I am currently on <strong>Days Off</strong> — enter when this off period started</>}
             </Radio>
           </Space>
         </Radio.Group>
@@ -191,9 +191,13 @@ export function ProfileForm({
           return (
             <Form.Item
               label={
-                status === "duty"
-                  ? "Joining date: when did your current duty period start?"
-                  : "Joining date: when did your current days off start?"
+                isUrdu
+                  ? status === "duty"
+                    ? "جوائننگ تاریخ: آپ کا موجودہ ڈیوٹی پیریڈ کب شروع ہوا؟"
+                    : "جوائننگ تاریخ: آپ کا موجودہ چھٹی کا پیریڈ کب شروع ہوا؟"
+                  : status === "duty"
+                    ? "Joining date: when did your current duty period start?"
+                    : "Joining date: when did your current days off start?"
               }
               name="startDate"
               rules={[
@@ -217,7 +221,7 @@ export function ProfileForm({
           <Button type="primary" htmlType="submit">
             {submitLabel}
           </Button>
-          {onCancel && <Button onClick={onCancel}>Cancel</Button>}
+            {onCancel && <Button onClick={onCancel}>{isUrdu ? 'منسوخ کریں' : 'Cancel'}</Button>}
         </Space>
       </Form.Item>
     </Form>
@@ -229,6 +233,7 @@ interface OnboardingScreenProps {
 }
 
 export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
+  const { isUrdu } = useLanguage();
   return (
     <div className="onboarding-screen">
       <Card bordered={false} className="onboarding-card">
@@ -241,11 +246,10 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
             />
             <Space direction="vertical" size="large" style={{ width: "100%" }}>
               <Title level={2} style={{ margin: 0 }}>
-                Duty Roster Tracker
+                {isUrdu ? 'ڈیوٹی روسٹر ٹریکر' : 'Duty Roster Tracker'}
               </Title>
               <Paragraph type="secondary">
-                Enter your joining date and current status to track your schedule.
-                Custom duty and off periods can be configured whenever needed.
+                {isUrdu ? 'اپنا شیڈول دیکھنے کے لیے جوائننگ تاریخ اور موجودہ حیثیت درج کریں۔ ضرورت کے مطابق کسٹم ڈیوٹی اور چھٹی کے پیریڈز شامل کیے جا سکتے ہیں۔' : 'Enter your joining date and current status to track your schedule. Custom duty and off periods can be configured whenever needed.'}
               </Paragraph>
             </Space>
             <Paragraph type="secondary" style={{ marginTop: "-12px" }}>

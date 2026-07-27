@@ -9,6 +9,7 @@ import {
   type ReactNode,
 } from 'react';
 import { THEME_STORAGE_KEY } from '../core/constants/app';
+import { useLanguage } from './LanguageContext';
 import { getOgdclTheme, type ThemeMode } from '../theme/ogdclTheme';
 
 interface ThemeContextValue {
@@ -30,6 +31,7 @@ function loadThemeMode(): ThemeMode {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
+  const { language } = useLanguage();
   const [mode, setMode] = useState<ThemeMode>(() => {
     const loaded = loadThemeMode();
     document.documentElement.dataset.theme = loaded;
@@ -56,7 +58,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   return (
     <ThemeContext.Provider value={value}>
-      <ConfigProvider theme={getOgdclTheme(mode)}>{children}</ConfigProvider>
+      <ConfigProvider theme={getOgdclTheme(mode)} direction={language === 'ur' ? 'rtl' : 'ltr'}>
+        {children}
+      </ConfigProvider>
     </ThemeContext.Provider>
   );
 }

@@ -1,6 +1,7 @@
 import { Spin } from 'antd';
 import { AppLayout } from './components/layout/AppLayout';
 import { ThemeToggle } from './components/layout/ThemeToggle';
+import { LanguageToggle } from './components/layout/LanguageToggle';
 import { OnboardingScreen } from './components/onboarding/OnboardingScreen';
 import { useUserProfile } from './hooks/useUserProfile';
 import './App.css';
@@ -20,6 +21,7 @@ function App() {
     return (
       <div className="onboarding-screen-wrap">
         <div className="onboarding-theme-toggle">
+          <LanguageToggle />
           <ThemeToggle />
         </div>
         <OnboardingScreen onComplete={updateProfile} />

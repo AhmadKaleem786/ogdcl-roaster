@@ -5,6 +5,8 @@ import type { UserProfile } from '../../core/types';
 import { appModules } from '../../modules/registry';
 import { SidebarContent } from './SidebarContent';
 import { ThemeToggle } from './ThemeToggle';
+import { LanguageToggle } from './LanguageToggle';
+import { useLanguage } from '../../context/LanguageContext';
 import './AppLayout.css';
 
 const { Header, Sider, Content } = Layout;
@@ -17,6 +19,7 @@ interface AppLayoutProps {
 }
 
 export function AppLayout({ profile, onProfileUpdate }: AppLayoutProps) {
+  const { isUrdu } = useLanguage();
   const [activeModuleId, setActiveModuleId] = useState(appModules[0]?.id ?? '');
   const [collapsed, setCollapsed] = useState(false);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
@@ -84,14 +87,15 @@ export function AppLayout({ profile, onProfileUpdate }: AppLayoutProps) {
               </button>
             )}
             <div className="app-header__titles">
-              <Text className="app-header__title">{activeModule.title}</Text>
+              <Text className="app-header__title">{isUrdu ? ({ calendar: 'ڈیوٹی کیلنڈر', 'future-date': 'آئندہ تاریخ دیکھیں', 'roster-settings': 'روسٹر سیٹنگز' }[activeModule.id] ?? activeModule.title) : activeModule.title}</Text>
               <Text type="secondary" className="app-header__subtitle">
-                {activeModule.description}
+                {isUrdu ? ({ calendar: 'اپنے ڈیوٹی اور آف دن کیلنڈر پر دیکھیں۔', 'future-date': 'کسی بھی تاریخ کے لیے اپنی ڈیوٹی کی صورتحال دیکھیں۔', 'roster-settings': 'جوائننگ تاریخ اور روسٹر پیریڈز اپ ڈیٹ کریں۔' }[activeModule.id] ?? activeModule.description) : activeModule.description}
               </Text>
             </div>
           </div>
 
           <div className="app-header__actions">
+            <LanguageToggle />
             <ThemeToggle />
           </div>
         </Header>
