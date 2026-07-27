@@ -7,6 +7,7 @@ import { SidebarContent } from './SidebarContent';
 import { ThemeToggle } from './ThemeToggle';
 import { LanguageToggle } from './LanguageToggle';
 import { useLanguage } from '../../context/LanguageContext';
+import { trackScreen } from '../../core/analytics/googleAnalytics';
 import './AppLayout.css';
 
 const { Header, Sider, Content } = Layout;
@@ -39,6 +40,10 @@ export function AppLayout({ profile, onProfileUpdate }: AppLayoutProps) {
   );
 
   const ModuleComponent = activeModule.component;
+
+  useEffect(() => {
+    trackScreen(activeModuleId);
+  }, [activeModuleId]);
 
   const sidebarProps = {
     profile,

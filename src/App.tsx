@@ -5,9 +5,15 @@ import { LanguageToggle } from './components/layout/LanguageToggle';
 import { OnboardingScreen } from './components/onboarding/OnboardingScreen';
 import { useUserProfile } from './hooks/useUserProfile';
 import './App.css';
+import { trackScreen } from './core/analytics/googleAnalytics';
+import { useEffect } from 'react';
 
 function App() {
   const { profile, isReady, updateProfile } = useUserProfile();
+
+  useEffect(() => {
+    if (isReady && !profile) trackScreen('onboarding');
+  }, [isReady, profile]);
 
   if (!isReady) {
     return (
