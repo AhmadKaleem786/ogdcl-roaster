@@ -109,7 +109,7 @@ export function FutureDateModule({ profile }: ModuleProps) {
                     {formatStatusLabel(result)}
                   </Descriptions.Item>
                   <Descriptions.Item label="Period">
-                    {isDuty ? '21-day Duty Block' : '21-day Off Block'}
+                    {result.totalDaysInPeriod}-day {isDuty ? 'Duty' : 'Off'} Block
                   </Descriptions.Item>
                   <Descriptions.Item label="Progress">
                     {Math.round((result.dayNumber / result.totalDaysInPeriod) * 100)}%

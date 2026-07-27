@@ -3,10 +3,17 @@ import type { Dayjs } from 'dayjs';
 
 export type RotaStatus = 'duty' | 'off';
 
+export interface RotaPeriod {
+  status: RotaStatus;
+  duration: number;
+}
+
 export interface UserProfile {
   name: string;
   startDate: string;
   startStatus: RotaStatus;
+  /** One-off periods beginning on startDate, before the normal 21/21 rota resumes. */
+  customPeriods?: RotaPeriod[];
 }
 
 export interface RotaDayInfo {
@@ -18,6 +25,7 @@ export interface RotaDayInfo {
 
 export interface ModuleProps {
   profile: UserProfile;
+  onProfileUpdate?: (profile: UserProfile) => void;
 }
 
 export interface AppModule {

@@ -42,7 +42,7 @@ export function AppLayout({ profile, onProfileUpdate }: AppLayoutProps) {
     activeModuleId,
     collapsed: isMobile ? false : collapsed,
     onModuleSelect: setActiveModuleId,
-    onProfileUpdate,
+    onOpenSettings: () => setActiveModuleId('roster-settings'),
     onNavigate: () => setMobileDrawerOpen(false),
   };
 
@@ -97,7 +97,7 @@ export function AppLayout({ profile, onProfileUpdate }: AppLayoutProps) {
         </Header>
 
         <Content className="app-content">
-          <ModuleComponent profile={profile} />
+          <ModuleComponent profile={profile} onProfileUpdate={onProfileUpdate} />
         </Content>
       </Layout>
 

@@ -1,13 +1,14 @@
-import { CalendarOutlined, SearchOutlined } from '@ant-design/icons';
+import { CalendarOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons';
 import type { AppModule } from '../core/types';
 import { CalendarModule } from './calendar/CalendarModule';
 import { FutureDateModule } from './futureDate/FutureDateModule';
+import { RosterSettingsModule } from './rosterSettings/RosterSettingsModule';
 
 export const appModules: AppModule[] = [
   {
     id: 'calendar',
     title: 'Duty Calendar',
-    description: 'View your 21-day duty and off cycle on the calendar.',
+    description: 'View your duty and off periods on the calendar.',
     icon: <CalendarOutlined />,
     component: CalendarModule,
   },
@@ -17,6 +18,13 @@ export const appModules: AppModule[] = [
     description: 'Check whether you will be on duty or off on any date.',
     icon: <SearchOutlined />,
     component: FutureDateModule,
+  },
+  {
+    id: 'roster-settings',
+    title: 'Roster Settings',
+    description: 'Update your joining date and roster periods.',
+    icon: <SettingOutlined />,
+    component: RosterSettingsModule,
   },
 ];
 

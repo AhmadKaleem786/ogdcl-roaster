@@ -12,7 +12,7 @@ interface SidebarContentProps {
   activeModuleId: string;
   collapsed: boolean;
   onModuleSelect: (moduleId: string) => void;
-  onProfileUpdate: (profile: UserProfile) => void;
+  onOpenSettings: () => void;
   onNavigate?: () => void;
 }
 
@@ -21,7 +21,7 @@ export function SidebarContent({
   activeModuleId,
   collapsed,
   onModuleSelect,
-  onProfileUpdate,
+  onOpenSettings,
   onNavigate,
 }: SidebarContentProps) {
   const { mode } = useTheme();
@@ -51,7 +51,7 @@ export function SidebarContent({
       <ProfileSummary
         profile={profile}
         collapsed={collapsed}
-        onUpdate={onProfileUpdate}
+        onOpenSettings={onOpenSettings}
       />
 
       <Menu

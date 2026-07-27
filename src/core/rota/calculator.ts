@@ -10,8 +10,11 @@ function getCyclePosition(daysDiff: number): number {
   return ((daysDiff % CYCLE_LENGTH) + CYCLE_LENGTH) % CYCLE_LENGTH;
 }
 
-function buildDayInfo(status: RotaStatus, dayNumber: number): RotaDayInfo {
-  const totalDaysInPeriod = status === 'duty' ? DUTY_DAYS : OFF_DAYS;
+function buildDayInfo(
+  status: RotaStatus,
+  dayNumber: number,
+  totalDaysInPeriod = status === 'duty' ? DUTY_DAYS : OFF_DAYS,
+): RotaDayInfo {
   return {
     status,
     dayNumber,
@@ -20,10 +23,38 @@ function buildDayInfo(status: RotaStatus, dayNumber: number): RotaDayInfo {
   };
 }
 
+function getStandardRotaStatus(daysIntoCycle: number): RotaDayInfo {
+  const position = getCyclePosition(daysIntoCycle);
+  if (position < DUTY_DAYS) return buildDayInfo('duty', position + 1);
+  return buildDayInfo('off', position - DUTY_DAYS + 1);
+}
+
+function getCustomRotaStatus(profile: UserProfile, daysDiff: number): RotaDayInfo | null {
+  if (!profile.customPeriods?.length) return null;
+
+  // Custom periods are scheduled forward from the user's anchor date.
+  if (daysDiff >= 0) {
+    let remainingDays = daysDiff;
+    for (const period of profile.customPeriods) {
+      if (remainingDays < period.duration) {
+        return buildDayInfo(period.status, remainingDays + 1, period.duration);
+      }
+      remainingDays -= period.duration;
+    }
+    // Once all custom periods finish, the normal rota restarts with duty.
+    return getStandardRotaStatus(remainingDays);
+  }
+
+  // Dates before the anchor date use the normal rota, ending with days off.
+  return getStandardRotaStatus(daysDiff - DUTY_DAYS);
+}
+
 export function getRotaStatus(profile: UserProfile, date: DateInput): RotaDayInfo {
   const start = normalizeDate(profile.startDate);
   const target = normalizeDate(date);
   const daysDiff = target.diff(start, 'day');
+  const customInfo = getCustomRotaStatus(profile, daysDiff);
+  if (customInfo) return customInfo;
   const position = getCyclePosition(daysDiff);
 
   if (profile.startStatus === 'duty') {
