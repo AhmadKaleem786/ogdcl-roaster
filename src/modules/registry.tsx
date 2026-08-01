@@ -1,4 +1,4 @@
-import { CalendarOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons';
+import { CalendarOutlined, RedoOutlined, SearchOutlined } from '@ant-design/icons';
 import type { AppModule } from '../core/types';
 import { CalendarModule } from './calendar/CalendarModule';
 import { FutureDateModule } from './futureDate/FutureDateModule';
@@ -24,9 +24,9 @@ export const appModules: AppModule[] = [
   {
     id: 'roster-settings',
     path: '/roster-settings',
-    title: 'Roster Settings',
-    description: 'Update your joining date and roster periods.',
-    icon: <SettingOutlined />,
+    title: 'Reschedule Roster',
+    description: 'Replan your roster and adjust your duty/off schedule.',
+    icon: <RedoOutlined />,
     component: RosterSettingsModule,
   },
 ];

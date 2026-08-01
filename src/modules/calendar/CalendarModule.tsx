@@ -1,5 +1,6 @@
 import { Calendar, Card, Progress, Space, Tag, Typography } from "antd";
 import dayjs from "dayjs";
+import { useState } from "react";
 import { getRotaStatus, getTodayStatus } from "../../core/rota/calculator";
 import type { ModuleProps } from "../../core/types";
 import { rotaColors } from "../../theme/ogdclTheme";
@@ -10,6 +11,7 @@ const { Text } = Typography;
 
 export function CalendarModule({ profile }: ModuleProps) {
   const { isUrdu } = useLanguage();
+  const [viewDate, setViewDate] = useState(dayjs());
   const todayInfo = getTodayStatus(profile);
   const isDutyToday = todayInfo.status === "duty";
   const completionPercent = Math.round(
@@ -100,10 +102,12 @@ export function CalendarModule({ profile }: ModuleProps) {
       <Card bordered={false} className="module-card calendar-card">
         <Calendar
           fullscreen={false}
+          onPanelChange={(date) => setViewDate(date)}
           fullCellRender={(date) => {
             const info = getRotaStatus(profile, date);
             const isToday = date.isSame(dayjs(), "day");
             const isDuty = info.status === "duty";
+            const isOtherMonth = !date.isSame(viewDate, "month");
 
             return (
               <div
@@ -113,6 +117,7 @@ export function CalendarModule({ profile }: ModuleProps) {
                     ? "calendar-full-cell--duty"
                     : "calendar-full-cell--off",
                   isToday ? "calendar-full-cell--today" : "",
+                  isOtherMonth ? "calendar-full-cell--other-month" : "",
                 ]
                   .filter(Boolean)
                   .join(" ")}

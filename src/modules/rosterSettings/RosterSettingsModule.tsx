@@ -11,9 +11,9 @@ export function RosterSettingsModule({ profile, onProfileUpdate }: ModuleProps) 
     <Card bordered={false} className="module-card" style={{ maxWidth: 720 }}>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         <div>
-          <Title level={3} style={{ marginTop: 0, marginBottom: 8 }}>{isUrdu ? 'اپنا روسٹر اپ ڈیٹ کریں' : 'Update your roster'}</Title>
+          <Title level={3} style={{ marginTop: 0, marginBottom: 8 }}>{isUrdu ? 'اپنا روسٹر دوبارہ ترتیب دیں' : 'Reschedule your roster'}</Title>
           <Paragraph type="secondary" style={{ marginBottom: 0 }}>
-            {isUrdu ? 'اپنی جوائننگ تاریخ، ابتدائی حیثیت یا کسٹم روسٹر پیریڈز تبدیل کریں۔ محفوظ کرنے پر کیلنڈر اور آئندہ تاریخوں کے نتائج اپ ڈیٹ ہو جائیں گے۔' : 'Change your joining date, starting status, or custom roster periods. Your calendar and future-date results update when you save.'}
+            {isUrdu ? 'اپنی جوائننگ تاریخ، ابتدائی حیثیت یا کسٹم روسٹر پیریڈز دوبارہ شیڈول کریں۔ محفوظ کرنے پر کیلنڈر اور آئندہ تاریخوں کے نتائج اپ ڈیٹ ہو جائیں گے۔' : 'Replan your joining date, starting status, or custom roster periods. Your calendar and future-date results update when you save.'}
           </Paragraph>
         </div>
         <Alert type="info" showIcon message={isUrdu ? 'تبدیلیاں محفوظ کرنے تک موجودہ روسٹر فعال رہے گا۔' : 'Your existing roster remains active until you save changes.'} />

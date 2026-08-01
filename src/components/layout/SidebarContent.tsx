@@ -31,7 +31,7 @@ export function SidebarContent({
   const menuItems: MenuProps['items'] = appModules.map((module) => ({
     key: module.id,
     icon: module.icon,
-    label: isUrdu ? ({ calendar: 'ڈیوٹی کیلنڈر', 'future-date': 'آئندہ تاریخ دیکھیں', 'roster-settings': 'روسٹر سیٹنگز' }[module.id] ?? module.title) : module.title,
+    label: isUrdu ? ({ calendar: 'ڈیوٹی کیلنڈر', 'future-date': 'آئندہ تاریخ دیکھیں', 'roster-settings': 'روسٹر دوبارہ ترتیب دیں' }[module.id] ?? module.title) : module.title,
   }));
 
   const handleMenuClick: MenuProps['onClick'] = ({ key }) => {

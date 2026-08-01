@@ -96,9 +96,9 @@ export function AppLayout({ profile, onProfileUpdate }: AppLayoutProps) {
               </button>
             )}
             <div className="app-header__titles">
-              <Text className="app-header__title">{isUrdu ? ({ calendar: 'ڈیوٹی کیلنڈر', 'future-date': 'آئندہ تاریخ دیکھیں', 'roster-settings': 'روسٹر سیٹنگز' }[activeModule.id] ?? activeModule.title) : activeModule.title}</Text>
+              <Text className="app-header__title">{isUrdu ? ({ calendar: 'ڈیوٹی کیلنڈر', 'future-date': 'آئندہ تاریخ دیکھیں', 'roster-settings': 'روسٹر دوبارہ ترتیب دیں' }[activeModule.id] ?? activeModule.title) : activeModule.title}</Text>
               <Text type="secondary" className="app-header__subtitle">
-                {isUrdu ? ({ calendar: 'اپنے ڈیوٹی اور آف دن کیلنڈر پر دیکھیں۔', 'future-date': 'کسی بھی تاریخ کے لیے اپنی ڈیوٹی کی صورتحال دیکھیں۔', 'roster-settings': 'جوائننگ تاریخ اور روسٹر پیریڈز اپ ڈیٹ کریں۔' }[activeModule.id] ?? activeModule.description) : activeModule.description}
+                {isUrdu ? ({ calendar: 'اپنے ڈیوٹی اور آف دن کیلنڈر پر دیکھیں۔', 'future-date': 'کسی بھی تاریخ کے لیے اپنی ڈیوٹی کی صورتحال دیکھیں۔', 'roster-settings': 'اپنی ڈیوٹی روسٹر دوبارہ ترتیب دیں اور شیڈول اپ ڈیٹ کریں۔' }[activeModule.id] ?? activeModule.description) : activeModule.description}
               </Text>
             </div>
           </div>
