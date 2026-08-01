@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { getRotaStatus, getTodayStatus } from "../../core/rota/calculator";
 import type { ModuleProps } from "../../core/types";
 import { rotaColors } from "../../theme/ogdclTheme";
-import { useLanguage } from '../../context/LanguageContext';
+import { useLanguage } from "../../context/LanguageContext";
 import "./CalendarModule.css";
 
 const { Text } = Typography;
@@ -30,10 +30,10 @@ export function CalendarModule({ profile }: ModuleProps) {
       <Card bordered={false} className="module-card">
         <Space wrap>
           <Tag color={rotaColors.duty} className="legend-tag">
-            {isUrdu ? 'ڈیوٹی' : 'Duty'}
+            {isUrdu ? "ڈیوٹی" : "Duty"}
           </Tag>
           <Tag color={rotaColors.off} className="legend-tag">
-            {isUrdu ? 'چھٹی' : 'Days Off'}
+            {isUrdu ? "چھٹی" : "Days Off"}
           </Tag>
         </Space>
         <Text type="secondary" className="calendar-hint">
@@ -44,17 +44,27 @@ export function CalendarModule({ profile }: ModuleProps) {
       <Card bordered={false} className="module-card">
         <Space direction="vertical" size="middle" style={{ width: "100%" }}>
           <div>
-            <Text type="secondary">{isUrdu ? 'موجودہ روسٹر کی صورتحال' : 'Current Rota status'}</Text>
+            <Text type="secondary">
+              {isUrdu ? "موجودہ روسٹر کی صورتحال" : "Current Rota status"}
+            </Text>
             <div style={{ marginTop: 6 }}>
               <Space>
                 <Tag
                   color={isDutyToday ? rotaColors.duty : rotaColors.off}
                   className="legend-tag"
                 >
-                  {isUrdu ? (isDutyToday ? 'ڈیوٹی پر' : 'چھٹی پر') : (isDutyToday ? 'On Duty' : 'On Days Off')}
+                  {isUrdu
+                    ? isDutyToday
+                      ? "ڈیوٹی پر"
+                      : "چھٹی پر"
+                    : isDutyToday
+                      ? "On Duty"
+                      : "On Days Off"}
                 </Tag>
                 <Text strong>
-                  {isUrdu ? `دن ${todayInfo.dayNumber} از ${todayInfo.totalDaysInPeriod}` : `Day ${todayInfo.dayNumber} of ${todayInfo.totalDaysInPeriod}`}
+                  {isUrdu
+                    ? `دن ${todayInfo.dayNumber} از ${todayInfo.totalDaysInPeriod}`
+                    : `Day ${todayInfo.dayNumber} of ${todayInfo.totalDaysInPeriod}`}
                 </Text>
               </Space>
             </div>
@@ -63,10 +73,26 @@ export function CalendarModule({ profile }: ModuleProps) {
             percent={completionPercent}
             strokeColor={isDutyToday ? rotaColors.duty : rotaColors.off}
             trailColor="rgba(128, 128, 128, 0.18)"
-            format={(percent) => isUrdu ? `${percent}% مکمل` : `${percent}% complete`}
+            format={(percent) =>
+              isUrdu ? `${percent}% مکمل` : `${percent}% complete`
+            }
           />
           <Text type="secondary">
-            {isUrdu ? <>تبدیلی <Text strong>{nextStatus === 'Duty' ? 'ڈیوٹی' : 'چھٹی'}</Text> پر {switchDate.format('DD MMM YYYY')} کو ہوگی ({todayInfo.daysUntilSwitch} دن باقی)۔</> : <>Switches to <Text strong>{nextStatus}</Text> on {switchDate.format('dddd, DD MMM YYYY')} ({todayInfo.daysUntilSwitch} day{todayInfo.daysUntilSwitch === 1 ? '' : 's'} remaining).</>}
+            {isUrdu ? (
+              <>
+                تبدیلی{" "}
+                <Text strong>{nextStatus === "Duty" ? "ڈیوٹی" : "چھٹی"}</Text>{" "}
+                پر {switchDate.format("DD MMM YYYY")} کو ہوگی (
+                {todayInfo.daysUntilSwitch} دن باقی)۔
+              </>
+            ) : (
+              <>
+                Switches to <Text strong>{nextStatus}</Text> on{" "}
+                {switchDate.format("dddd, DD MMM YYYY")} (
+                {todayInfo.daysUntilSwitch} day
+                {todayInfo.daysUntilSwitch === 1 ? "" : "s"} remaining).
+              </>
+            )}
           </Text>
         </Space>
       </Card>
@@ -92,8 +118,14 @@ export function CalendarModule({ profile }: ModuleProps) {
                   .join(" ")}
               >
                 <span className="calendar-full-cell__date">{date.date()}</span>
-                <span className="calendar-full-cell__status">
-                  {isUrdu ? (isDuty ? 'ڈیوٹی' : 'چھٹی') : (isDuty ? 'Duty' : 'Off')}
+                <span className="calendar-full-cell__status hide-on-small">
+                  {isUrdu
+                    ? isDuty
+                      ? "ڈیوٹی"
+                      : "چھٹی"
+                    : isDuty
+                      ? "Duty"
+                      : "Off"}
                 </span>
                 <span className="calendar-full-cell__day">
                   D{info.dayNumber}
