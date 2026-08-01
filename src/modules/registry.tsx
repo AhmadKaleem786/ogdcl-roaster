@@ -7,6 +7,7 @@ import { RosterSettingsModule } from './rosterSettings/RosterSettingsModule';
 export const appModules: AppModule[] = [
   {
     id: 'calendar',
+    path: '/calendar',
     title: 'Duty Calendar',
     description: 'View your duty and off periods on the calendar.',
     icon: <CalendarOutlined />,
@@ -14,6 +15,7 @@ export const appModules: AppModule[] = [
   },
   {
     id: 'future-date',
+    path: '/future-date',
     title: 'Future Date Lookup',
     description: 'Check whether you will be on duty or off on any date.',
     icon: <SearchOutlined />,
@@ -21,6 +23,7 @@ export const appModules: AppModule[] = [
   },
   {
     id: 'roster-settings',
+    path: '/roster-settings',
     title: 'Roster Settings',
     description: 'Update your joining date and roster periods.',
     icon: <SettingOutlined />,

@@ -1,4 +1,5 @@
 import { Spin } from 'antd';
+import { BrowserRouter } from 'react-router-dom';
 import { AppLayout } from './components/layout/AppLayout';
 import { ThemeToggle } from './components/layout/ThemeToggle';
 import { LanguageToggle } from './components/layout/LanguageToggle';
@@ -35,7 +36,11 @@ function App() {
     );
   }
 
-  return <AppLayout profile={profile} onProfileUpdate={updateProfile} />;
+  return (
+    <BrowserRouter>
+      <AppLayout profile={profile} onProfileUpdate={updateProfile} />
+    </BrowserRouter>
+  );
 }
 
 export default App;

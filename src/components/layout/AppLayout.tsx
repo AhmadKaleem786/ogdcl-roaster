@@ -1,6 +1,7 @@
 import { MenuOutlined } from '@ant-design/icons';
 import { Drawer, Grid, Layout, Typography } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import type { UserProfile } from '../../core/types';
 import { appModules } from '../../modules/registry';
 import { SidebarContent } from './SidebarContent';
@@ -21,7 +22,8 @@ interface AppLayoutProps {
 
 export function AppLayout({ profile, onProfileUpdate }: AppLayoutProps) {
   const { isUrdu } = useLanguage();
-  const [activeModuleId, setActiveModuleId] = useState(appModules[0]?.id ?? '');
+  const location = useLocation();
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const screens = useBreakpoint();
@@ -35,11 +37,10 @@ export function AppLayout({ profile, onProfileUpdate }: AppLayoutProps) {
   }, [isMobile]);
 
   const activeModule = useMemo(
-    () => appModules.find((module) => module.id === activeModuleId) ?? appModules[0],
-    [activeModuleId],
+    () => appModules.find((module) => module.path === location.pathname) ?? appModules[0],
+    [location.pathname],
   );
-
-  const ModuleComponent = activeModule.component;
+  const activeModuleId = activeModule.id;
 
   useEffect(() => {
     trackScreen(activeModuleId);
@@ -49,8 +50,11 @@ export function AppLayout({ profile, onProfileUpdate }: AppLayoutProps) {
     profile,
     activeModuleId,
     collapsed: isMobile ? false : collapsed,
-    onModuleSelect: setActiveModuleId,
-    onOpenSettings: () => setActiveModuleId('roster-settings'),
+    onModuleSelect: (moduleId: string) => {
+      const module = appModules.find((item) => item.id === moduleId);
+      if (module) navigate(module.path);
+    },
+    onOpenSettings: () => navigate('/roster-settings'),
     onNavigate: () => setMobileDrawerOpen(false),
   };
 
@@ -106,7 +110,19 @@ export function AppLayout({ profile, onProfileUpdate }: AppLayoutProps) {
         </Header>
 
         <Content className="app-content">
-          <ModuleComponent profile={profile} onProfileUpdate={onProfileUpdate} />
+          <Routes>
+            {appModules.map((module) => {
+              const ModuleComponent = module.component;
+              return (
+                <Route
+                  key={module.id}
+                  path={module.path}
+                  element={<ModuleComponent profile={profile} onProfileUpdate={onProfileUpdate} />}
+                />
+              );
+            })}
+            <Route path="*" element={<Navigate to={appModules[0].path} replace />} />
+          </Routes>
         </Content>
       </Layout>
 

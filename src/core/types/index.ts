@@ -30,6 +30,7 @@ export interface ModuleProps {
 
 export interface AppModule {
   id: string;
+  path: string;
   title: string;
   description: string;
   icon: ReactNode;
