@@ -23,10 +23,20 @@ function buildDayInfo(
   };
 }
 
-function getStandardRotaStatus(daysIntoCycle: number): RotaDayInfo {
+function getCycleRotaStatus(daysIntoCycle: number, cycleStartStatus: RotaStatus): RotaDayInfo {
   const position = getCyclePosition(daysIntoCycle);
-  if (position < DUTY_DAYS) return buildDayInfo('duty', position + 1);
-  return buildDayInfo('off', position - DUTY_DAYS + 1);
+
+  if (cycleStartStatus === 'duty') {
+    if (position < DUTY_DAYS) return buildDayInfo('duty', position + 1);
+    return buildDayInfo('off', position - DUTY_DAYS + 1);
+  }
+
+  if (position < OFF_DAYS) return buildDayInfo('off', position + 1);
+  return buildDayInfo('duty', position - OFF_DAYS + 1);
+}
+
+function getStandardRotaStatus(daysIntoCycle: number, cycleStartStatus: RotaStatus = 'duty'): RotaDayInfo {
+  return getCycleRotaStatus(daysIntoCycle, cycleStartStatus);
 }
 
 function getCustomRotaStatus(profile: UserProfile, daysDiff: number): RotaDayInfo | null {
@@ -45,8 +55,8 @@ function getCustomRotaStatus(profile: UserProfile, daysDiff: number): RotaDayInf
     return getStandardRotaStatus(remainingDays);
   }
 
-  // Dates before the anchor date use the normal rota, ending with days off.
-  return getStandardRotaStatus(daysDiff - DUTY_DAYS);
+  const anchorStatus = profile.customPeriods[0]?.status ?? profile.startStatus;
+  return getCycleRotaStatus(daysDiff, anchorStatus);
 }
 
 export function getRotaStatus(profile: UserProfile, date: DateInput): RotaDayInfo {
@@ -55,19 +65,8 @@ export function getRotaStatus(profile: UserProfile, date: DateInput): RotaDayInf
   const daysDiff = target.diff(start, 'day');
   const customInfo = getCustomRotaStatus(profile, daysDiff);
   if (customInfo) return customInfo;
-  const position = getCyclePosition(daysDiff);
 
-  if (profile.startStatus === 'duty') {
-    if (position < DUTY_DAYS) {
-      return buildDayInfo('duty', position + 1);
-    }
-    return buildDayInfo('off', position - DUTY_DAYS + 1);
-  }
-
-  if (position < OFF_DAYS) {
-    return buildDayInfo('off', position + 1);
-  }
-  return buildDayInfo('duty', position - OFF_DAYS + 1);
+  return getCycleRotaStatus(daysDiff, profile.startStatus);
 }
 
 export function getTodayStatus(profile: UserProfile): RotaDayInfo {
